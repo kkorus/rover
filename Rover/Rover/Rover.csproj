@@ -42,6 +42,8 @@
   <ItemGroup>
     <Compile Include="Coordainte.cs" />
     <Compile Include="Direction.cs" />
+    <Compile Include="IPlanet.cs" />
+    <Compile Include="IRover.cs" />
     <Compile Include="MoveResult.cs" />
     <Compile Include="Planet.cs" />
     <Compile Include="Point.cs" />

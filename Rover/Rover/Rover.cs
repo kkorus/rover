@@ -1,12 +1,7 @@
-﻿namespace Rover
+﻿using System;
+
+namespace Rover
 {
-    public interface IRover
-    {
-        Coordainte Coordinate { get; }
-
-        MoveResult Move(string commands);
-    }
-
     public class Rover : IRover
     {
         private readonly IPlanet _planet;
@@ -22,6 +17,8 @@
 
         public MoveResult Move(string commands)
         {
+            if (string.IsNullOrWhiteSpace(commands)) throw new ArgumentException($"Commands can't empty. {nameof(commands)}");
+
             foreach (var command in commands)
             {
                 switch (command)
