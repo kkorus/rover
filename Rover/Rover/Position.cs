@@ -5,7 +5,7 @@ namespace Rover
 {
     public interface IPosition
     {
-        Coordainte Coordainte { get; }
+        Coordinate Coordinate { get; }
     }
 
     public interface IMovePostion : IPosition
@@ -27,7 +27,7 @@ namespace Rover
         public Position(Point point, Direction direction, IPlanet planet)
         {
             _planet = planet;
-            Coordainte = new Coordainte(point, direction);
+            Coordinate = new Coordinate(point, direction);
 
             _forwardLookup = new Dictionary<Direction, Func<IMovePostion>>
             {
@@ -45,7 +45,7 @@ namespace Rover
             };
         }
 
-        public Coordainte Coordainte { get; }
+        public Coordinate Coordinate { get; }
 
         public IMovePostion Forward() => _forwardLookup[Direction]();
 
@@ -63,11 +63,11 @@ namespace Rover
 
         private IMovePostion MoveLeft() => CreateNextPosition(Decrement(X, _planet.Width), Y, Direction);
 
-        private int X => Coordainte.Point.X;
+        private int X => Coordinate.Point.X;
 
-        private int Y => Coordainte.Point.Y;
+        private int Y => Coordinate.Point.Y;
 
-        private Direction Direction => Coordainte.Direction;
+        private Direction Direction => Coordinate.Direction;
 
         private static int Increment(int toIncrement, int limitWrap) => (toIncrement + 1) % limitWrap;
 

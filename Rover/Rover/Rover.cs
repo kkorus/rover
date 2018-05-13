@@ -24,7 +24,7 @@ namespace Rover
             };
         }
 
-        public Coordainte Coordinate => _currentPosition.Coordainte;
+        public Coordinate Coordinate => _currentPosition.Coordinate;
 
         public MoveResult Move(string commands)
         {
@@ -34,17 +34,17 @@ namespace Rover
             foreach (var command in commands)
             {
                 var nextPosition = _commandLookup[command]();
-                if (IsObstacle(nextPosition.Coordainte))
+                if (IsObstacle(nextPosition.Coordinate))
                 {
-                    return MoveResult.CreateObstacleResult(_currentPosition.Coordainte, nextPosition.Coordainte.Point);
+                    return MoveResult.CreateObstacleResult(_currentPosition.Coordinate, nextPosition.Coordinate.Point);
                 }
 
                 _currentPosition = nextPosition;
             }
 
-            return MoveResult.CreateMoveResult(_currentPosition.Coordainte);
+            return MoveResult.CreateMoveResult(_currentPosition.Coordinate);
         }
 
-        private bool IsObstacle(Coordainte coordainte) => _planet.Obstacles.Contains(coordainte.Point);
+        private bool IsObstacle(Coordinate coordinate) => _planet.Obstacles.Contains(coordinate.Point);
     }
 }

@@ -1,8 +1,8 @@
 ﻿namespace Rover
 {
-    public class Coordainte
+    public class Coordinate
     {
-        public Coordainte(Point point, Direction direction)
+        public Coordinate(Point point, Direction direction)
         {
             Point = point;
             Direction = direction;

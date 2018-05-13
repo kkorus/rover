@@ -40,7 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Coordainte.cs" />
+    <Compile Include="Coordinate.cs" />
     <Compile Include="Direction.cs" />
     <Compile Include="InvalidMoveCommandException.cs" />
     <Compile Include="IPlanet.cs" />

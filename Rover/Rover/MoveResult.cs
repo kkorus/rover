@@ -6,17 +6,17 @@
 
         public Point? ObstaclePoint { get; }
 
-        public Coordainte LastCoordainte { get; }
+        public Coordinate LastCoordinate { get; }
 
-        public MoveResult(Coordainte lastCoordainte, bool obstacleDetected, Point? obstaclePoint = null)
+        public MoveResult(Coordinate lastCoordinate, bool obstacleDetected, Point? obstaclePoint = null)
         {
             ObstacleDetected = obstacleDetected;
             ObstaclePoint = obstaclePoint;
-            LastCoordainte = lastCoordainte;
+            LastCoordinate = lastCoordinate;
         }
 
-        public static MoveResult CreateObstacleResult(Coordainte lastCoordainte, Point position) => new MoveResult(lastCoordainte, true, position);
+        public static MoveResult CreateObstacleResult(Coordinate lastCoordinate, Point position) => new MoveResult(lastCoordinate, true, position);
 
-        public static MoveResult CreateMoveResult(Coordainte lastCoordainte) => new MoveResult(lastCoordainte, false);
+        public static MoveResult CreateMoveResult(Coordinate lastCoordinate) => new MoveResult(lastCoordinate, false);
     }
 }

@@ -2,7 +2,7 @@
 {
     public interface IRover
     {
-        Coordainte Coordinate { get; }
+        Coordinate Coordinate { get; }
 
         MoveResult Move(string commands);
     }

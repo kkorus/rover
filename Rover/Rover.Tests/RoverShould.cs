@@ -22,7 +22,7 @@ namespace Rover.Tests
         public void Have_Start_Coordainte()
         {
             // Arrange
-            var expectedCorrdinate = new Coordainte(new Point(0, 0), Direction.North);
+            var expectedCorrdinate = new Coordinate(new Point(0, 0), Direction.North);
 
             // Assert
             _rover.Coordinate.Should().BeEquivalentTo(expectedCorrdinate);
@@ -33,7 +33,7 @@ namespace Rover.Tests
         {
             // Arrange
             const string commands = "FFFBBBF";
-            var expectedCorrdinate = new Coordainte(new Point(0, 1), Direction.North);
+            var expectedCorrdinate = new Coordinate(new Point(0, 1), Direction.North);
 
             AssertRoverPosition(commands, expectedCorrdinate);
         }
@@ -43,7 +43,7 @@ namespace Rover.Tests
         {
             // Arrange
             const string commands = "LL";
-            var expectedCorrdinate = new Coordainte(new Point(0, 0), Direction.South);
+            var expectedCorrdinate = new Coordinate(new Point(0, 0), Direction.South);
 
             AssertRoverPosition(commands, expectedCorrdinate);
         }
@@ -53,7 +53,7 @@ namespace Rover.Tests
         {
             // Arrange
             const string commands = "RRR";
-            var expectedCorrdinate = new Coordainte(new Point(0, 0), Direction.West);
+            var expectedCorrdinate = new Coordinate(new Point(0, 0), Direction.West);
 
             AssertRoverPosition(commands, expectedCorrdinate);
         }
@@ -63,7 +63,7 @@ namespace Rover.Tests
         {
             // Arrange
             const string commands = "RFLFFFFF";
-            var expectedCorrdinate = new Coordainte(new Point(1, 0), Direction.North);
+            var expectedCorrdinate = new Coordinate(new Point(1, 0), Direction.North);
 
             AssertRoverPosition(commands, expectedCorrdinate);
         }
@@ -104,13 +104,13 @@ namespace Rover.Tests
             Assert.Throws<InvalidMoveCommandException>(() => _rover.Move(invalidCommands));
         }
 
-        private void AssertRoverPosition(string commands, Coordainte expectedCoordainte)
+        private void AssertRoverPosition(string commands, Coordinate expectedCoordinate)
         {
             // Act
             var moveResult = _rover.Move(commands);
 
             // Assert
-            moveResult.LastCoordainte.Should().BeEquivalentTo(expectedCoordainte);
+            moveResult.LastCoordinate.Should().BeEquivalentTo(expectedCoordinate);
         }
     }
 }
