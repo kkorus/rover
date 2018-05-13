@@ -30,6 +30,12 @@
                     case 'B':
                         _currentPosition = _currentPosition.Backward();
                         break;
+                    case 'L':
+                        _currentPosition = _currentPosition.TurnLeft();
+                        break;
+                    case 'R':
+                        _currentPosition = _currentPosition.TurnRight();
+                        break;
                 }
             }
 
