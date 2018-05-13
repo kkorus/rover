@@ -7,32 +7,16 @@ namespace Rover.Tests
     [TestFixture]
     public class PositionShould
     {
-        [Test]
-        public void Change_When_Moving_Forward()
+        [TestCaseSource(nameof(MoveForwardTestCases))]
+        public void Change_When_Moving_Forward(Position position, Position expectedNextPosiiton)
         {
-            // Arrange
-            var position = new Position(new Point(1, 1), Direction.North);
-            var expectedNextPosiiton = new Position(new Point(1, 2), Direction.North);
-
-            // Act
-            var nextPosition = position.Forward();
-
-            // Assert
-            nextPosition.Should().BeEquivalentTo(expectedNextPosiiton);
+            position.Forward().Should().BeEquivalentTo(expectedNextPosiiton);
         }
 
-        [Test]
-        public void Change_When_Moving_Backward()
+        [TestCaseSource(nameof(MoveBackwardTestCases))]
+        public void Change_When_Moving_Backward(Position position, Position expectedNextPosiiton)
         {
-            // Arrange
-            var position = new Position(new Point(1, 1), Direction.North);
-            var expectedNextPosiiton = new Position(new Point(1, 0), Direction.North);
-
-            // Act
-            var nextPosition = position.Backward();
-
-            // Assert
-            nextPosition.Should().BeEquivalentTo(expectedNextPosiiton);
+            position.Forward().Should().BeEquivalentTo(expectedNextPosiiton);
         }
 
         [TestCaseSource(nameof(TurnLeftTestCases))]
@@ -45,6 +29,28 @@ namespace Rover.Tests
         public void Change_Direction_When_Turning_Right(Position position, Position expectedNextPosiiton)
         {
             position.TurnRight().Should().BeEquivalentTo(expectedNextPosiiton);
+        }
+
+        public static IEnumerable<TestCaseData> MoveForwardTestCases
+        {
+            get
+            {
+                yield return new TestCaseData(new Position(new Point(1, 1), Direction.North), new Position(new Point(1, 2), Direction.North));
+                yield return new TestCaseData(new Position(new Point(1, 1), Direction.South), new Position(new Point(1, 0), Direction.South));
+                yield return new TestCaseData(new Position(new Point(1, 1), Direction.East), new Position(new Point(2, 1), Direction.East));
+                yield return new TestCaseData(new Position(new Point(1, 1), Direction.West), new Position(new Point(0, 1), Direction.West));
+            }
+        }
+
+        public static IEnumerable<TestCaseData> MoveBackwardTestCases
+        {
+            get
+            {
+                yield return new TestCaseData(new Position(new Point(1, 1), Direction.North), new Position(new Point(1, 0), Direction.North));
+                yield return new TestCaseData(new Position(new Point(1, 1), Direction.South), new Position(new Point(1, 2), Direction.South));
+                yield return new TestCaseData(new Position(new Point(1, 1), Direction.East), new Position(new Point(0, 1), Direction.East));
+                yield return new TestCaseData(new Position(new Point(1, 1), Direction.West), new Position(new Point(2, 1), Direction.West));
+            }
         }
 
         public static IEnumerable<TestCaseData> TurnLeftTestCases
