@@ -16,7 +16,7 @@ namespace Rover.Tests
         [TestCaseSource(nameof(MoveBackwardTestCases))]
         public void Change_When_Moving_Backward(Position position, Position expectedNextPosiiton)
         {
-            position.Forward().Should().BeEquivalentTo(expectedNextPosiiton);
+            position.Backward().Should().BeEquivalentTo(expectedNextPosiiton);
         }
 
         [TestCaseSource(nameof(TurnLeftTestCases))]
