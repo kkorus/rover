@@ -8,12 +8,20 @@ namespace Rover
     {
         private readonly IPlanet _planet;
         private IMovePostion _currentPosition;
+        private readonly IDictionary<char, Func<IMovePostion>> _commandLookup;
         private readonly IEnumerable<char> _validCommands = new[] { 'F', 'B', 'L', 'R' };
 
         public Rover(IPlanet planet)
         {
             _planet = planet;
             _currentPosition = new Position(new Point(0, 0), Direction.North, planet);
+            _commandLookup = new Dictionary<char, Func<IMovePostion>>
+            {
+                {'F', () => _currentPosition.Forward()},
+                {'B', () => _currentPosition.Backward()},
+                {'L', () => _currentPosition.TurnLeft()},
+                {'R', () => _currentPosition.TurnRight()}
+            };
         }
 
         public Coordainte Coordinate => _currentPosition.Coordainte;
@@ -25,42 +33,13 @@ namespace Rover
 
             foreach (var command in commands)
             {
-                switch (command)
+                var nextPosition = _commandLookup[command]();
+                if (IsObstacle(nextPosition.Coordainte))
                 {
-                    case 'F':
-                        {
-                            var nextPosition = _currentPosition.Forward();
-                            if (IsObstacle(nextPosition.Coordainte))
-                                return MoveResult.CreateObstacleResult(_currentPosition.Coordainte,
-                                    nextPosition.Coordainte.Point);
-                            _currentPosition = nextPosition;
-                            break;
-                        }
-                    case 'B':
-                        {
-                            var nextPosition = _currentPosition.Backward();
-                            if (IsObstacle(nextPosition.Coordainte))
-                                return MoveResult.CreateObstacleResult(_currentPosition.Coordainte, nextPosition.Coordainte.Point);
-                            _currentPosition = nextPosition;
-                            break;
-                        }
-                    case 'L':
-                        {
-                            var nextPosition = _currentPosition.TurnLeft();
-                            if (IsObstacle(nextPosition.Coordainte))
-                                return MoveResult.CreateObstacleResult(_currentPosition.Coordainte, nextPosition.Coordainte.Point);
-                            _currentPosition = nextPosition;
-                            break;
-                        }
-                    case 'R':
-                        {
-                            var nextPosition = _currentPosition.TurnRight();
-                            if (IsObstacle(nextPosition.Coordainte))
-                                return MoveResult.CreateObstacleResult(_currentPosition.Coordainte, nextPosition.Coordainte.Point);
-                            _currentPosition = nextPosition;
-                            break;
-                        }
+                    return MoveResult.CreateObstacleResult(_currentPosition.Coordainte, nextPosition.Coordainte.Point);
                 }
+
+                _currentPosition = nextPosition;
             }
 
             return MoveResult.CreateMoveResult(_currentPosition.Coordainte);
