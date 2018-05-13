@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System.Collections.Generic;
+using FluentAssertions;
 using NUnit.Framework;
 
 namespace Rover.Tests
@@ -80,6 +81,25 @@ namespace Rover.Tests
 
             // Assert
             moveResult.LastCoordainte.Should().BeEquivalentTo(expectedCorrdinate);
+        }
+
+        [Test]
+        public void Detect_Obstacles()
+        {
+            // Arrange
+            _planet = new Planet(5, 5, new List<Point> { new Point(0, 1), new Point(1, 1) });
+            _rover = new Rover(_planet);
+
+            const string commands = "FRFLFRF";
+            var expectedObstaclesPoint = new Point(1, 1);
+
+            // Act
+            var moveResult = _rover.Move(commands);
+
+            // Assert
+            Assert.True(moveResult.ObstacleDetected);
+            Assert.True(moveResult.ObstaclePoint.HasValue);
+            moveResult.ObstaclePoint.Should().BeEquivalentTo(expectedObstaclesPoint);
         }
     }
 }
