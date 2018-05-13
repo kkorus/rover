@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -100,6 +102,15 @@ namespace Rover.Tests
             Assert.True(moveResult.ObstacleDetected);
             Assert.True(moveResult.ObstaclePoint.HasValue);
             moveResult.ObstaclePoint.Should().BeEquivalentTo(expectedObstaclesPoint);
+        }
+
+        [TestCase("")]
+        [TestCase(" ")]
+        [TestCase("\n")]
+        [TestCase(null)]
+        public void Throw_An_Exception_When_No_Commands_Given(string emptyCommands)
+        {
+            Assert.Throws<ArgumentException>(() => _rover.Move(emptyCommands));
         }
     }
 }
