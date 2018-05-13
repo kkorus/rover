@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Rover
 {
@@ -6,6 +8,7 @@ namespace Rover
     {
         private readonly IPlanet _planet;
         private IMovePostion _currentPosition;
+        private readonly IEnumerable<char> _validCommands = new[] { 'F', 'B', 'L', 'R' };
 
         public Rover(IPlanet planet)
         {
@@ -18,6 +21,7 @@ namespace Rover
         public MoveResult Move(string commands)
         {
             if (string.IsNullOrWhiteSpace(commands)) throw new ArgumentException($"Commands can't empty. {nameof(commands)}");
+            if (commands.ToCharArray().Any(c => !_validCommands.Contains(c))) throw new InvalidMoveCommandException("Invalid command detected");
 
             foreach (var command in commands)
             {
