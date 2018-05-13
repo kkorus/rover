@@ -33,5 +33,33 @@ namespace Rover.Tests
             // Assert
             nextPosition.Should().BeEquivalentTo(expectedEndPosition);
         }
+
+        [Test]
+        public void Change_Direction_When_Turining_Left()
+        {
+            // Arrange
+            var position = new Position(new Point(0, 0), Direction.North);
+            var expectedEndPosition = new Position(new Point(0, 0), Direction.West);
+
+            // Act
+            var nextPosition = position.TurnLeft();
+
+            // Assert
+            nextPosition.Should().BeEquivalentTo(expectedEndPosition);
+        }
+
+        [Test]
+        public void Change_Direction_When_Turining_Right()
+        {
+            // Arrange
+            var position = new Position(new Point(0, 0), Direction.North);
+            var expectedEndPosition = new Position(new Point(0, 0), Direction.East);
+
+            // Act
+            var nextPosition = position.TurnRight();
+
+            // Assert
+            nextPosition.Should().BeEquivalentTo(expectedEndPosition);
+        }
     }
 }
