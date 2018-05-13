@@ -35,7 +35,7 @@ namespace Rover.Tests
             const string commands = "FFFBBBF";
             var expectedCorrdinate = new Coordinate(new Point(0, 1), Direction.North);
 
-            AssertRoverPosition(commands, expectedCorrdinate);
+            AssertRoverCoordinate(commands, expectedCorrdinate);
         }
 
         [Test]
@@ -45,7 +45,7 @@ namespace Rover.Tests
             const string commands = "LL";
             var expectedCorrdinate = new Coordinate(new Point(0, 0), Direction.South);
 
-            AssertRoverPosition(commands, expectedCorrdinate);
+            AssertRoverCoordinate(commands, expectedCorrdinate);
         }
 
         [Test]
@@ -55,7 +55,7 @@ namespace Rover.Tests
             const string commands = "RRR";
             var expectedCorrdinate = new Coordinate(new Point(0, 0), Direction.West);
 
-            AssertRoverPosition(commands, expectedCorrdinate);
+            AssertRoverCoordinate(commands, expectedCorrdinate);
         }
 
         [Test]
@@ -65,7 +65,7 @@ namespace Rover.Tests
             const string commands = "RFLFFFFF";
             var expectedCorrdinate = new Coordinate(new Point(1, 0), Direction.North);
 
-            AssertRoverPosition(commands, expectedCorrdinate);
+            AssertRoverCoordinate(commands, expectedCorrdinate);
         }
 
         [Test]
@@ -104,7 +104,7 @@ namespace Rover.Tests
             Assert.Throws<InvalidMoveCommandException>(() => _rover.Move(invalidCommands));
         }
 
-        private void AssertRoverPosition(string commands, Coordinate expectedCoordinate)
+        private void AssertRoverCoordinate(string commands, Coordinate expectedCoordinate)
         {
             // Act
             var moveResult = _rover.Move(commands);

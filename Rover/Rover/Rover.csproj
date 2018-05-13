@@ -42,8 +42,10 @@
   <ItemGroup>
     <Compile Include="Coordinate.cs" />
     <Compile Include="Direction.cs" />
+    <Compile Include="IMovePostion.cs" />
     <Compile Include="InvalidMoveCommandException.cs" />
     <Compile Include="IPlanet.cs" />
+    <Compile Include="IPosition.cs" />
     <Compile Include="IRover.cs" />
     <Compile Include="MoveResult.cs" />
     <Compile Include="Planet.cs" />

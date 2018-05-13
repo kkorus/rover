@@ -3,19 +3,6 @@ using System.Collections.Generic;
 
 namespace Rover
 {
-    public interface IPosition
-    {
-        Coordinate Coordinate { get; }
-    }
-
-    public interface IMovePostion : IPosition
-    {
-        IMovePostion Forward();
-        IMovePostion Backward();
-        IMovePostion TurnLeft();
-        IMovePostion TurnRight();
-    }
-
     public class Position : IMovePostion
     {
         private const int DirectionCount = 4;
@@ -28,21 +15,8 @@ namespace Rover
         {
             _planet = planet;
             Coordinate = new Coordinate(point, direction);
-
-            _forwardLookup = new Dictionary<Direction, Func<IMovePostion>>
-            {
-                { Direction.North,  MoveTop },
-                { Direction.South, MoveBottom },
-                { Direction.East, MoveRight},
-                { Direction.West, MoveLeft }
-            };
-            _backwardLookup = new Dictionary<Direction, Func<IMovePostion>>
-            {
-                { Direction.North,  MoveBottom },
-                { Direction.South, MoveTop },
-                { Direction.East, MoveLeft},
-                { Direction.West, MoveRight }
-            };
+            _forwardLookup = CreateForwardLookup();
+            _backwardLookup = CreateBackwardLookup();
         }
 
         public Coordinate Coordinate { get; }
@@ -74,5 +48,27 @@ namespace Rover
         private static int Decrement(int toDecrement, int limitWrap) => (limitWrap + toDecrement - 1) % limitWrap;
 
         private IMovePostion CreateNextPosition(int x, int y, Direction direction) => new Position(new Point(x, y), direction, _planet);
+
+        private IDictionary<Direction, Func<IMovePostion>> CreateForwardLookup()
+        {
+            return new Dictionary<Direction, Func<IMovePostion>>
+            {
+                { Direction.North,  MoveTop },
+                { Direction.South, MoveBottom },
+                { Direction.East, MoveRight},
+                { Direction.West, MoveLeft }
+            };
+        }
+
+        private IDictionary<Direction, Func<IMovePostion>> CreateBackwardLookup()
+        {
+            return new Dictionary<Direction, Func<IMovePostion>>
+            {
+                { Direction.North,  MoveBottom },
+                { Direction.South, MoveTop },
+                { Direction.East, MoveLeft},
+                { Direction.West, MoveRight }
+            };
+        }
     }
 }
