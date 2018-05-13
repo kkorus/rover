@@ -112,5 +112,13 @@ namespace Rover.Tests
         {
             Assert.Throws<ArgumentException>(() => _rover.Move(emptyCommands));
         }
+
+        [Test]
+        public void Throw_An_Exception_When_Invalid_Command_Given()
+        {
+            const string invalidCommands = "FFF_XXX";
+
+            Assert.Throws<InvalidMoveCommandException>(() => _rover.Move(invalidCommands));
+        }
     }
 }
