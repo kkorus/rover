@@ -27,21 +27,44 @@
                 switch (command)
                 {
                     case 'F':
-                        _currentPosition = _currentPosition.Forward();
-                        break;
+                        {
+                            var nextPosition = _currentPosition.Forward();
+                            if (IsObstacle(nextPosition.Coordainte))
+                                return MoveResult.CreateObstacleResult(_currentPosition.Coordainte,
+                                    nextPosition.Coordainte.Point);
+                            _currentPosition = nextPosition;
+                            break;
+                        }
                     case 'B':
-                        _currentPosition = _currentPosition.Backward();
-                        break;
+                        {
+                            var nextPosition = _currentPosition.Backward();
+                            if (IsObstacle(nextPosition.Coordainte))
+                                return MoveResult.CreateObstacleResult(_currentPosition.Coordainte, nextPosition.Coordainte.Point);
+                            _currentPosition = nextPosition;
+                            break;
+                        }
                     case 'L':
-                        _currentPosition = _currentPosition.TurnLeft();
-                        break;
+                        {
+                            var nextPosition = _currentPosition.TurnLeft();
+                            if (IsObstacle(nextPosition.Coordainte))
+                                return MoveResult.CreateObstacleResult(_currentPosition.Coordainte, nextPosition.Coordainte.Point);
+                            _currentPosition = nextPosition;
+                            break;
+                        }
                     case 'R':
-                        _currentPosition = _currentPosition.TurnRight();
-                        break;
+                        {
+                            var nextPosition = _currentPosition.TurnRight();
+                            if (IsObstacle(nextPosition.Coordainte))
+                                return MoveResult.CreateObstacleResult(_currentPosition.Coordainte, nextPosition.Coordainte.Point);
+                            _currentPosition = nextPosition;
+                            break;
+                        }
                 }
             }
 
             return MoveResult.CreateMoveResult(_currentPosition.Coordainte);
         }
+
+        private bool IsObstacle(Coordainte coordainte) => _planet.Obstacles.Contains(coordainte.Point);
     }
 }

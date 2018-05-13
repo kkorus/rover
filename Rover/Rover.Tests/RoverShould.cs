@@ -90,7 +90,7 @@ namespace Rover.Tests
             _planet = new Planet(5, 5, new List<Point> { new Point(0, 1), new Point(1, 1) });
             _rover = new Rover(_planet);
 
-            const string commands = "FRFLFRF";
+            const string commands = "RFLFLFRF";
             var expectedObstaclesPoint = new Point(1, 1);
 
             // Act
