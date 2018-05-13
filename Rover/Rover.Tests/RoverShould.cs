@@ -61,5 +61,21 @@ namespace Rover.Tests
             // Assert
             moveResult.LastCoordainte.Should().BeEquivalentTo(expectedCorrdinate);
         }
+
+        [Test]
+        public void Bypass_A_Planet()
+        {
+            // Arrange
+            var planet = new Planet(5, 5);
+            var rover = new Rover(planet);
+            const string commands = "RFLFFFFF";
+            var expectedCorrdinate = new Coordainte(new Point(1, 0), Direction.North);
+
+            // Act
+            var moveResult = rover.Move(commands);
+
+            // Assert
+            moveResult.LastCoordainte.Should().BeEquivalentTo(expectedCorrdinate);
+        }
     }
 }
