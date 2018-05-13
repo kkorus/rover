@@ -8,12 +8,14 @@ namespace Rover.Tests
     public class PositionShould
     {
         [TestCaseSource(nameof(MoveForwardTestCases))]
+        [TestCaseSource(nameof(WrapForwardTestCases))]
         public void Change_When_Moving_Forward(Position position, Position expectedNextPosiiton)
         {
             position.Forward().Should().BeEquivalentTo(expectedNextPosiiton);
         }
 
         [TestCaseSource(nameof(MoveBackwardTestCases))]
+        [TestCaseSource(nameof(WrapBackwardTestCases))]
         public void Change_When_Moving_Backward(Position position, Position expectedNextPosiiton)
         {
             position.Backward().Should().BeEquivalentTo(expectedNextPosiiton);
@@ -31,47 +33,71 @@ namespace Rover.Tests
             position.TurnRight().Should().BeEquivalentTo(expectedNextPosiiton);
         }
 
-        public static IEnumerable<TestCaseData> MoveForwardTestCases
+        private static IPlanet Planet => new Planet(5, 5);
+
+        private static IEnumerable<TestCaseData> MoveForwardTestCases
         {
             get
             {
-                yield return new TestCaseData(new Position(new Point(1, 1), Direction.North), new Position(new Point(1, 2), Direction.North));
-                yield return new TestCaseData(new Position(new Point(1, 1), Direction.South), new Position(new Point(1, 0), Direction.South));
-                yield return new TestCaseData(new Position(new Point(1, 1), Direction.East), new Position(new Point(2, 1), Direction.East));
-                yield return new TestCaseData(new Position(new Point(1, 1), Direction.West), new Position(new Point(0, 1), Direction.West));
+                yield return new TestCaseData(new Position(new Point(1, 1), Direction.North, Planet), new Position(new Point(1, 2), Direction.North, Planet));
+                yield return new TestCaseData(new Position(new Point(1, 1), Direction.South, Planet), new Position(new Point(1, 0), Direction.South, Planet));
+                yield return new TestCaseData(new Position(new Point(1, 1), Direction.East, Planet), new Position(new Point(2, 1), Direction.East, Planet));
+                yield return new TestCaseData(new Position(new Point(1, 1), Direction.West, Planet), new Position(new Point(0, 1), Direction.West, Planet));
             }
         }
 
-        public static IEnumerable<TestCaseData> MoveBackwardTestCases
+        private static IEnumerable<TestCaseData> MoveBackwardTestCases
         {
             get
             {
-                yield return new TestCaseData(new Position(new Point(1, 1), Direction.North), new Position(new Point(1, 0), Direction.North));
-                yield return new TestCaseData(new Position(new Point(1, 1), Direction.South), new Position(new Point(1, 2), Direction.South));
-                yield return new TestCaseData(new Position(new Point(1, 1), Direction.East), new Position(new Point(0, 1), Direction.East));
-                yield return new TestCaseData(new Position(new Point(1, 1), Direction.West), new Position(new Point(2, 1), Direction.West));
+                yield return new TestCaseData(new Position(new Point(1, 1), Direction.North, Planet), new Position(new Point(1, 0), Direction.North, Planet));
+                yield return new TestCaseData(new Position(new Point(1, 1), Direction.South, Planet), new Position(new Point(1, 2), Direction.South, Planet));
+                yield return new TestCaseData(new Position(new Point(1, 1), Direction.East, Planet), new Position(new Point(0, 1), Direction.East, Planet));
+                yield return new TestCaseData(new Position(new Point(1, 1), Direction.West, Planet), new Position(new Point(2, 1), Direction.West, Planet));
             }
         }
 
-        public static IEnumerable<TestCaseData> TurnLeftTestCases
+        private static IEnumerable<TestCaseData> TurnLeftTestCases
         {
             get
             {
-                yield return new TestCaseData(new Position(new Point(0, 0), Direction.North), new Position(new Point(0, 0), Direction.West));
-                yield return new TestCaseData(new Position(new Point(0, 0), Direction.South), new Position(new Point(0, 0), Direction.East));
-                yield return new TestCaseData(new Position(new Point(0, 0), Direction.East), new Position(new Point(0, 0), Direction.North));
-                yield return new TestCaseData(new Position(new Point(0, 0), Direction.West), new Position(new Point(0, 0), Direction.South));
+                yield return new TestCaseData(new Position(new Point(0, 0), Direction.North, Planet), new Position(new Point(0, 0), Direction.West, Planet));
+                yield return new TestCaseData(new Position(new Point(0, 0), Direction.South, Planet), new Position(new Point(0, 0), Direction.East, Planet));
+                yield return new TestCaseData(new Position(new Point(0, 0), Direction.East, Planet), new Position(new Point(0, 0), Direction.North, Planet));
+                yield return new TestCaseData(new Position(new Point(0, 0), Direction.West, Planet), new Position(new Point(0, 0), Direction.South, Planet));
             }
         }
 
-        public static IEnumerable<TestCaseData> TurnRightTestCases
+        private static IEnumerable<TestCaseData> TurnRightTestCases
         {
             get
             {
-                yield return new TestCaseData(new Position(new Point(0, 0), Direction.North), new Position(new Point(0, 0), Direction.East));
-                yield return new TestCaseData(new Position(new Point(0, 0), Direction.South), new Position(new Point(0, 0), Direction.West));
-                yield return new TestCaseData(new Position(new Point(0, 0), Direction.East), new Position(new Point(0, 0), Direction.South));
-                yield return new TestCaseData(new Position(new Point(0, 0), Direction.West), new Position(new Point(0, 0), Direction.North));
+                yield return new TestCaseData(new Position(new Point(0, 0), Direction.North, Planet), new Position(new Point(0, 0), Direction.East, Planet));
+                yield return new TestCaseData(new Position(new Point(0, 0), Direction.South, Planet), new Position(new Point(0, 0), Direction.West, Planet));
+                yield return new TestCaseData(new Position(new Point(0, 0), Direction.East, Planet), new Position(new Point(0, 0), Direction.South, Planet));
+                yield return new TestCaseData(new Position(new Point(0, 0), Direction.West, Planet), new Position(new Point(0, 0), Direction.North, Planet));
+            }
+        }
+
+        private static IEnumerable<TestCaseData> WrapForwardTestCases
+        {
+            get
+            {
+                yield return new TestCaseData(new Position(new Point(0, 4), Direction.North, Planet), new Position(new Point(0, 0), Direction.North, Planet));
+                yield return new TestCaseData(new Position(new Point(0, 0), Direction.South, Planet), new Position(new Point(0, 4), Direction.South, Planet));
+                yield return new TestCaseData(new Position(new Point(4, 0), Direction.East, Planet), new Position(new Point(0, 0), Direction.East, Planet));
+                yield return new TestCaseData(new Position(new Point(0, 0), Direction.West, Planet), new Position(new Point(4, 0), Direction.West, Planet));
+            }
+        }
+
+        private static IEnumerable<TestCaseData> WrapBackwardTestCases
+        {
+            get
+            {
+                yield return new TestCaseData(new Position(new Point(0, 0), Direction.North, Planet), new Position(new Point(0, 4), Direction.North, Planet));
+                yield return new TestCaseData(new Position(new Point(0, 4), Direction.South, Planet), new Position(new Point(0, 0), Direction.South, Planet));
+                yield return new TestCaseData(new Position(new Point(0, 0), Direction.East, Planet), new Position(new Point(4, 0), Direction.East, Planet));
+                yield return new TestCaseData(new Position(new Point(4, 0), Direction.West, Planet), new Position(new Point(0, 0), Direction.West, Planet));
             }
         }
     }
