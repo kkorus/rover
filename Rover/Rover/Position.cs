@@ -1,6 +1,11 @@
 ﻿namespace Rover
 {
-    public interface IMovePostion
+    public interface IPosition
+    {
+        Coordainte Coordainte { get; }
+    }
+
+    public interface IMovePostion : IPosition
     {
         IMovePostion Forward();
         IMovePostion Backward();
