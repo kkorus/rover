@@ -10,8 +10,8 @@ namespace Rover.Tests
         public void Change_When_Moving_Forward()
         {
             // Arrange
-            var position = new Position(1, 1, Direction.North);
-            var expectedEndPosition = new Position(1, 2, Direction.North);
+            var position = new Position(new Point(1, 1), Direction.North);
+            var expectedEndPosition = new Position(new Point(1, 2), Direction.North);
 
             // Act
             var nextPosition = position.Forward();

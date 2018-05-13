@@ -23,7 +23,7 @@ namespace Rover.Tests
             // Arrange
             var rover = new Rover();
             const string commands = "FFFBBBF";
-            var expectedCorrdinate = new Coordainte(0, 1, Direction.North);
+            var expectedCorrdinate = new Coordainte(new Point(0, 1), Direction.North);
 
             // Act
             var moveResult = rover.Move(commands);
