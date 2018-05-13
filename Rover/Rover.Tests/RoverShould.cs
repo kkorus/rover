@@ -16,5 +16,20 @@ namespace Rover.Tests
             // Assert
             rover.Coordinate.Should().BeEquivalentTo(expectedCorrdinate);
         }
+
+        [Test]
+        public void Move_Forward_And_Backward()
+        {
+            // Arrange
+            var rover = new Rover();
+            const string commands = "FFFBBBF";
+            var expectedCorrdinate = new Coordainte(0, 1, Direction.North);
+
+            // Act
+            var moveResult = rover.Move(commands);
+
+            // Assert
+            moveResult.LastCoordainte.Should().BeEquivalentTo(expectedCorrdinate);
+        }
     }
 }
