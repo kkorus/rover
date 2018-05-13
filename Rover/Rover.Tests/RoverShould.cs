@@ -31,5 +31,35 @@ namespace Rover.Tests
             // Assert
             moveResult.LastCoordainte.Should().BeEquivalentTo(expectedCorrdinate);
         }
+
+        [Test]
+        public void Turn_Left()
+        {
+            // Arrange
+            var rover = new Rover();
+            const string commands = "LL";
+            var expectedCorrdinate = new Coordainte(new Point(0, 0), Direction.South);
+
+            // Act
+            var moveResult = rover.Move(commands);
+
+            // Assert
+            moveResult.LastCoordainte.Should().BeEquivalentTo(expectedCorrdinate);
+        }
+
+        [Test]
+        public void Turn_Right()
+        {
+            // Arrange
+            var rover = new Rover();
+            const string commands = "RRR";
+            var expectedCorrdinate = new Coordainte(new Point(0, 0), Direction.West);
+
+            // Act
+            var moveResult = rover.Move(commands);
+
+            // Assert
+            moveResult.LastCoordainte.Should().BeEquivalentTo(expectedCorrdinate);
+        }
     }
 }
