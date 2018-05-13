@@ -23,7 +23,7 @@
 
         public IMovePostion Backward()
         {
-            return null;
+            return new Position(new Point(Point.X, Point.Y - 1), _coordainte.Direction);
         }
 
         public Coordainte Coordainte => _coordainte;
