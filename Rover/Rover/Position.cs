@@ -18,7 +18,8 @@ namespace Rover
 
     public class Position : IMovePostion
     {
-        private readonly Coordainte _coordainte;
+        private const int DirectionCount = 4;
+
         private readonly IPlanet _planet;
         private readonly IDictionary<Direction, Func<IMovePostion>> _forwardLookup;
         private readonly IDictionary<Direction, Func<IMovePostion>> _backwardLookup;
@@ -26,7 +27,7 @@ namespace Rover
         public Position(Point point, Direction direction, IPlanet planet)
         {
             _planet = planet;
-            _coordainte = new Coordainte(point, direction);
+            Coordainte = new Coordainte(point, direction);
 
             _forwardLookup = new Dictionary<Direction, Func<IMovePostion>>
             {
@@ -44,33 +45,15 @@ namespace Rover
             };
         }
 
-        public IMovePostion Forward()
-        {
-            return _forwardLookup[Direction]();
-        }
+        public Coordainte Coordainte { get; }
 
-        public IMovePostion Backward()
-        {
-            return _backwardLookup[Direction]();
-        }
+        public IMovePostion Forward() => _forwardLookup[Direction]();
 
-        public IMovePostion TurnLeft()
-        {
-            var nextDirection = Direction == Direction.North
-                ? Direction.West
-                : Direction - 1;
+        public IMovePostion Backward() => _backwardLookup[Direction]();
 
-            return new Position(Point, nextDirection, _planet);
-        }
+        public IMovePostion TurnLeft() => CreateNextPosition(X, Y, (Direction)Decrement((int)Direction, DirectionCount));
 
-        public IMovePostion TurnRight()
-        {
-            var nextDirection = Direction == Direction.West
-                ? Direction.North
-                : Direction + 1;
-
-            return new Position(Point, nextDirection, _planet);
-        }
+        public IMovePostion TurnRight() => CreateNextPosition(X, Y, (Direction)Increment((int)Direction, DirectionCount));
 
         private IMovePostion MoveTop() => CreateNextPosition(X, Increment(Y, _planet.Length), Direction);
 
@@ -80,15 +63,11 @@ namespace Rover
 
         private IMovePostion MoveLeft() => CreateNextPosition(Decrement(X, _planet.Width), Y, Direction);
 
-        public Coordainte Coordainte => _coordainte;
+        private int X => Coordainte.Point.X;
 
-        private Point Point => _coordainte.Point;
+        private int Y => Coordainte.Point.Y;
 
-        private int X => _coordainte.Point.X;
-
-        private int Y => _coordainte.Point.Y;
-
-        private Direction Direction => _coordainte.Direction;
+        private Direction Direction => Coordainte.Direction;
 
         private static int Increment(int toIncrement, int limitWrap) => (toIncrement + 1) % limitWrap;
 
