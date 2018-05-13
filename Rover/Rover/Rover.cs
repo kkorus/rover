@@ -9,11 +9,13 @@
 
     public class Rover : IRover
     {
+        private readonly IPlanet _planet;
         private IMovePostion _currentPosition;
 
-        public Rover()
+        public Rover(IPlanet planet)
         {
-            _currentPosition = new Position(new Point(0, 0), Direction.North);
+            _planet = planet;
+            _currentPosition = new Position(new Point(0, 0), Direction.North, planet);
         }
 
         public Coordainte Coordinate => _currentPosition.Coordainte;
